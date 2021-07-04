@@ -20,5 +20,4 @@ import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
 @Repository
 public interface PredmetRepository extends JpaRepository<Predmet, Long>{
 
-   
 }

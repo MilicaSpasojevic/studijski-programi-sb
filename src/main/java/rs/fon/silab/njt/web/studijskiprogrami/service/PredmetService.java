@@ -13,6 +13,8 @@ import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
  * @author Milica
  */
 public interface PredmetService {
-    PredmetDto save(PredmetDto cityDto) throws Exception;
+    PredmetDto save(PredmetDto predmetDto) throws Exception;
     List<PredmetDto> getAll() throws Exception;
+    PredmetDto update(PredmetDto predmetDto) throws Exception;
+    void delete(Long id) throws Exception;
 }

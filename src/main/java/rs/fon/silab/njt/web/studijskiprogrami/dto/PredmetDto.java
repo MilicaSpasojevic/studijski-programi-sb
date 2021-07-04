@@ -15,6 +15,7 @@ public class PredmetDto implements Dto{
     Long predmetid;
     Long espb;
     String naziv;
+    Long tipPredmetaId;
 
     public PredmetDto() {
     }
@@ -24,6 +25,25 @@ public class PredmetDto implements Dto{
         this.espb = espb;
         this.naziv = naziv;
     }
+
+    public PredmetDto(Long predmetid, Long espb, String naziv, Long tipPredmetaId) {
+        this.predmetid = predmetid;
+        this.espb = espb;
+        this.naziv = naziv;
+        this.tipPredmetaId = tipPredmetaId;
+    }
+    
+    
+
+    public Long getTipPredmetaId() {
+        return tipPredmetaId;
+    }
+
+    public void setTipPredmetaId(Long tipPredmetaId) {
+        this.tipPredmetaId = tipPredmetaId;
+    }
+    
+    
 
    
 

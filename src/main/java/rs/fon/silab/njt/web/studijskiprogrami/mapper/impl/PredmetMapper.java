@@ -19,7 +19,7 @@ public class PredmetMapper implements EntityDtoMapper<PredmetDto, Predmet>{
 
     @Override
     public PredmetDto toDto(Predmet entity) {
-        return new PredmetDto(entity.getPredmetid(), entity.getEspb(), entity.getNaziv());
+        return new PredmetDto(entity.getPredmetid(), entity.getEspb(), entity.getNaziv(), entity.getTipPredmetaId().getTipPredmetaID());
     }
 
     @Override

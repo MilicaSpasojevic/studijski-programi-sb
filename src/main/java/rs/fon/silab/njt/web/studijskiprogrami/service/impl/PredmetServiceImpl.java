@@ -16,6 +16,7 @@ import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
 import rs.fon.silab.njt.web.studijskiprogrami.mapper.impl.PredmetMapper;
 import rs.fon.silab.njt.web.studijskiprogrami.repository.PredmetRepository;
 import rs.fon.silab.njt.web.studijskiprogrami.service.PredmetService;
+import rs.fon.silab.njt.web.studijskiprogrami.service.TipPredmetaService;
 
 /**
  *
@@ -24,31 +25,30 @@ import rs.fon.silab.njt.web.studijskiprogrami.service.PredmetService;
 @Service
 @Transactional
 public class PredmetServiceImpl implements PredmetService{
-//    private final Dao<Predmet> predmetDao;
-//    private final PredmetMapper predmetMapper;
+
     private final PredmetRepository predmetRepository;
     private final PredmetMapper predmetMapper;
 
+    private final TipPredmetaService tpService;
+    
     @Autowired
-    public PredmetServiceImpl(PredmetRepository predmetRepository, PredmetMapper predmetMapper) {
+    public PredmetServiceImpl(PredmetRepository predmetRepository, PredmetMapper predmetMapper, TipPredmetaService tpService) {
         this.predmetRepository = predmetRepository;
         this.predmetMapper = predmetMapper;
+        this.tpService = tpService;
     }
 
-    
-
-    
-    
-    
-//    @Autowired
-//    public PredmetServiceImpl(@Qualifier(value = "predmetDaoSpringJPA") Dao<Predmet> predmetDao, PredmetMapper predmetMapper) {
-//        this.predmetDao = predmetDao;
-//        this.predmetMapper = predmetMapper;
-//    }
 
     @Override
-    public PredmetDto save(PredmetDto cityDto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public PredmetDto save(PredmetDto predmetDto) throws Exception {
+        Predmet predmet = new Predmet();
+        predmet.setEspb(predmetDto.getEspb());
+        predmet.setNaziv(predmetDto.getNaziv());
+        predmet.setTipPredmetaId(tpService.findById(predmetDto.getTipPredmetaId()));
+        
+        predmetRepository.save(predmet);
+        return predmetMapper.toDto(predmet);
+        
     }
 
     @Override
@@ -56,9 +56,28 @@ public class PredmetServiceImpl implements PredmetService{
        
         
         List<Predmet> predmeti = predmetRepository.findAll();
+        System.out.println(predmeti);
         return predmeti.stream().map(predmet -> {
             return predmetMapper.toDto(predmet);
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public PredmetDto update(PredmetDto predmetDto) throws Exception {
+        Predmet predmet = new Predmet();
+        predmet.setEspb(predmetDto.getEspb());
+        predmet.setNaziv(predmetDto.getNaziv());
+        predmet.setPredmetid(predmetDto.getPredmetid());
+        predmet.setTipPredmetaId(tpService.findById(predmetDto.getTipPredmetaId()));
+        
+        predmetRepository.save(predmet);
+        return predmetMapper.toDto(predmet);
+    }
+
+    @Override
+    public void delete(Long id) throws Exception {
+        Predmet predmet = predmetRepository.getById(id);
+        predmetRepository.delete(predmet);
     }
     
     
