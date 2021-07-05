@@ -19,20 +19,20 @@ public class PozicijaDto implements Dto{
     Long pozicijaId;
     Long godina;
     Long espb;
-    Studijskiprogram studijskiProgram;
-    Tippredmeta tipPredmeta;
-    Grupapredmeta grupaPredmeta;
+    Long studijskiProgramId;
+    Long tipPredmetaId;
+    Long grupaPredmetaId;
 
     public PozicijaDto() {
     }
 
-    public PozicijaDto(Long pozicijaId, Long godina, Long espb, Studijskiprogram studijskiProgram, Tippredmeta tipPredmeta, Grupapredmeta grupaPredmeta) {
+    public PozicijaDto(Long pozicijaId, Long godina, Long espb, Long studijskiProgramId, Long tipPredmetaId, Long grupaPredmetaId) {
         this.pozicijaId = pozicijaId;
         this.godina = godina;
         this.espb = espb;
-        this.studijskiProgram = studijskiProgram;
-        this.tipPredmeta = tipPredmeta;
-        this.grupaPredmeta = grupaPredmeta;
+        this.studijskiProgramId = studijskiProgramId;
+        this.tipPredmetaId = tipPredmetaId;
+        this.grupaPredmetaId = grupaPredmetaId;
     }
 
     public Long getPozicijaId() {
@@ -47,16 +47,16 @@ public class PozicijaDto implements Dto{
         return espb;
     }
 
-    public Studijskiprogram getStudijskiProgram() {
-        return studijskiProgram;
+    public Long getStudijskiProgramId() {
+        return studijskiProgramId;
     }
 
-    public Tippredmeta getTipPredmeta() {
-        return tipPredmeta;
+    public Long getTipPredmetaId() {
+        return tipPredmetaId;
     }
 
-    public Grupapredmeta getGrupaPredmeta() {
-        return grupaPredmeta;
+    public Long getGrupaPredmetaId() {
+        return grupaPredmetaId;
     }
 
     public void setPozicijaId(Long pozicijaId) {
@@ -71,27 +71,21 @@ public class PozicijaDto implements Dto{
         this.espb = espb;
     }
 
-    public void setStudijskiProgram(Studijskiprogram studijskiProgram) {
-        this.studijskiProgram = studijskiProgram;
+    public void setStudijskiProgramId(Long studijskiProgramId) {
+        this.studijskiProgramId = studijskiProgramId;
     }
 
-    public void setTipPredmeta(Tippredmeta tipPredmeta) {
-        this.tipPredmeta = tipPredmeta;
+    public void setTipPredmetaId(Long tipPredmetaId) {
+        this.tipPredmetaId = tipPredmetaId;
     }
 
-    public void setGrupaPredmeta(Grupapredmeta grupaPredmeta) {
-        this.grupaPredmeta = grupaPredmeta;
+    public void setGrupaPredmetaId(Long grupaPredmetaId) {
+        this.grupaPredmetaId = grupaPredmetaId;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.pozicijaId);
-        hash = 23 * hash + Objects.hashCode(this.godina);
-        hash = 23 * hash + Objects.hashCode(this.espb);
-        hash = 23 * hash + Objects.hashCode(this.studijskiProgram);
-        hash = 23 * hash + Objects.hashCode(this.tipPredmeta);
-        hash = 23 * hash + Objects.hashCode(this.grupaPredmeta);
+        int hash = 5;
         return hash;
     }
 
@@ -116,13 +110,13 @@ public class PozicijaDto implements Dto{
         if (!Objects.equals(this.espb, other.espb)) {
             return false;
         }
-        if (!Objects.equals(this.studijskiProgram, other.studijskiProgram)) {
+        if (!Objects.equals(this.studijskiProgramId, other.studijskiProgramId)) {
             return false;
         }
-        if (!Objects.equals(this.tipPredmeta, other.tipPredmeta)) {
+        if (!Objects.equals(this.tipPredmetaId, other.tipPredmetaId)) {
             return false;
         }
-        if (!Objects.equals(this.grupaPredmeta, other.grupaPredmeta)) {
+        if (!Objects.equals(this.grupaPredmetaId, other.grupaPredmetaId)) {
             return false;
         }
         return true;
@@ -130,9 +124,10 @@ public class PozicijaDto implements Dto{
 
     @Override
     public String toString() {
-        return "PozicijaDto{" + "pozicijaId=" + pozicijaId + ", godina=" + godina + ", espb=" + espb + ", studijskiProgram=" + studijskiProgram + ", tipPredmeta=" + tipPredmeta + ", grupaPredmeta=" + grupaPredmeta + '}';
+        return "PozicijaDto{" + "pozicijaId=" + pozicijaId + ", godina=" + godina + ", espb=" + espb + ", studijskiProgramId=" + studijskiProgramId + ", tipPredmetaId=" + tipPredmetaId + ", grupaPredmetaId=" + grupaPredmetaId + '}';
     }
 
+   
     
     
 }

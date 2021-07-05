@@ -5,14 +5,12 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.service;
 
-import java.util.List;
-import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Grupapredmeta;
 
 /**
  *
  * @author Milica
  */
-public interface PozicijaService {
-    void save(List<PozicijaDto> pozicijaDto) throws Exception;
-    List<PozicijaDto> getAll() throws Exception;
+public interface GrupaPredmetaService {
+    Grupapredmeta findById(Long id) throws Exception;
 }
