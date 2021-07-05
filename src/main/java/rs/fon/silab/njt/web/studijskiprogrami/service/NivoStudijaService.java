@@ -6,13 +6,13 @@
 package rs.fon.silab.njt.web.studijskiprogrami.service;
 
 import java.util.List;
-import rs.fon.silab.njt.web.studijskiprogrami.domain.Nivostudija;
+import rs.fon.silab.njt.web.studijskiprogrami.dto.NivoStudijaDto;
 
 /**
  *
  * @author milos
  */
 public interface NivoStudijaService {
-     List<Nivostudija> getAll() throws Exception;
-     Nivostudija findById(Long id) throws Exception;
+     List<NivoStudijaDto> getAll() throws Exception;
+     NivoStudijaDto findById(Long id) throws Exception;
 }

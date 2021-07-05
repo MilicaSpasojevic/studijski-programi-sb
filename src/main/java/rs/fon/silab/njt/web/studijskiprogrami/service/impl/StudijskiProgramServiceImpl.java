@@ -15,6 +15,7 @@ import rs.fon.silab.njt.web.studijskiprogrami.domain.Predmet;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Studijskiprogram;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.StudijskiProgramDto;
+import rs.fon.silab.njt.web.studijskiprogrami.mapper.impl.NivoStudijaMapper;
 import rs.fon.silab.njt.web.studijskiprogrami.mapper.impl.PredmetMapper;
 import rs.fon.silab.njt.web.studijskiprogrami.mapper.impl.StudijskiProgramMapper;
 import rs.fon.silab.njt.web.studijskiprogrami.repository.StudijskiProgramRepository;
@@ -37,13 +38,15 @@ public class StudijskiProgramServiceImpl implements StudijskiProgramService{
 
     private final FakultetService fakultetService;
     private final NivoStudijaService nsService;
+    private final NivoStudijaMapper nivoStudijaMapper;
     
     @Autowired
-    public StudijskiProgramServiceImpl(StudijskiProgramRepository spRepository ,StudijskiProgramMapper predmetMapper, FakultetService fakultetService, NivoStudijaService nsService) {
+    public StudijskiProgramServiceImpl(StudijskiProgramRepository spRepository ,StudijskiProgramMapper predmetMapper, FakultetService fakultetService, NivoStudijaService nsService, NivoStudijaMapper nivoStudijaMapper) {
         this.spRepository = spRepository;
         this.spMapper = predmetMapper;
         this.nsService = nsService;
         this.fakultetService = fakultetService;
+        this.nivoStudijaMapper = nivoStudijaMapper;
     }
 
 
@@ -53,7 +56,7 @@ public class StudijskiProgramServiceImpl implements StudijskiProgramService{
         Studijskiprogram studijskiprogram = new Studijskiprogram();
         studijskiprogram.setBrojSemestara(spDto.getBrojSemestara());
         studijskiprogram.setFakultetid(fakultetService.findById(spDto.getFakultetid()));
-        studijskiprogram.setNivostudijaid(nsService.findById(spDto.getNivostudijaid()));
+        studijskiprogram.setNivostudijaid(nivoStudijaMapper.toEntity(nsService.findById(spDto.getNivostudijaid())));
         studijskiprogram.setNaziv(spDto.getNaziv());
         studijskiprogram.setStatus(spDto.getStatus());
         
