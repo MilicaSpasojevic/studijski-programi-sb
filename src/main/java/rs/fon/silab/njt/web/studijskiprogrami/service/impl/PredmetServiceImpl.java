@@ -79,6 +79,11 @@ public class PredmetServiceImpl implements PredmetService{
         Predmet predmet = predmetRepository.getById(id);
         predmetRepository.delete(predmet);
     }
+
+    @Override
+    public PredmetDto findById(Long id) throws Exception {
+        return predmetMapper.toDto(predmetRepository.getById(id));
+    }
     
     
     

@@ -87,5 +87,12 @@ public class PozicijaServiceImpl implements PozicijaService{
             return pozicijaMapper.toDto(predmet);
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public PozicijaDto getById(PozicijaPK id) throws Exception {
+        return pozicijaMapper.toDto(pozicijaRepository.getById(id));
+    }
+    
+    
     
 }

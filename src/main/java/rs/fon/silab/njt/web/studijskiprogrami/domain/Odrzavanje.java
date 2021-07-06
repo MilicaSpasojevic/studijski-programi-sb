@@ -6,9 +6,13 @@
 package rs.fon.silab.njt.web.studijskiprogrami.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,8 +29,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Odrzavanje implements Entity {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OdrzavanjePK odrzavanjePK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "odrzavanjeId")
+    private Long odrzavanjeId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "semestar")
@@ -34,37 +41,40 @@ public class Odrzavanje implements Entity {
     @JoinColumn(name = "grupaId", referencedColumnName = "grupaId")
     @ManyToOne(optional = false)
     private Grupapredmeta grupaId;
-    @JoinColumn(name = "modulId", referencedColumnName = "modulId", insertable = false, updatable = false)
+    @JoinColumn(name = "modulId", referencedColumnName = "modulId")
     @ManyToOne(optional = false)
     private Modul modul;
-    @JoinColumn(name = "predmetId", referencedColumnName = "predmetid", insertable = false, updatable = false)
+    @JoinColumn(name = "predmetId", referencedColumnName = "predmetid")
     @ManyToOne(optional = false)
     private Predmet predmet;
+    
+    
 
     public Odrzavanje() {
     }
 
-    public Odrzavanje(OdrzavanjePK odrzavanjePK) {
-        this.odrzavanjePK = odrzavanjePK;
-    }
-
-    public Odrzavanje(OdrzavanjePK odrzavanjePK, int semestar) {
-        this.odrzavanjePK = odrzavanjePK;
+    public Odrzavanje(Long odrzavanjeId, int semestar, Grupapredmeta grupaId, Modul modul, Predmet predmet) {
+        this.odrzavanjeId = odrzavanjeId;
         this.semestar = semestar;
+        this.grupaId = grupaId;
+        this.modul = modul;
+        this.predmet = predmet;
     }
 
-    public Odrzavanje(long predmetId, long modulId) {
-        this.odrzavanjePK = new OdrzavanjePK(predmetId, modulId);
+    public Long getOdrzavanjeId() {
+        return odrzavanjeId;
     }
 
-    public OdrzavanjePK getOdrzavanjePK() {
-        return odrzavanjePK;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setOdrzavanjePK(OdrzavanjePK odrzavanjePK) {
-        this.odrzavanjePK = odrzavanjePK;
+    public void setOdrzavanjeId(Long odrzavanjeId) {
+        this.odrzavanjeId = odrzavanjeId;
     }
 
+    
+    
     public int getSemestar() {
         return semestar;
     }
@@ -99,19 +109,40 @@ public class Odrzavanje implements Entity {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (odrzavanjePK != null ? odrzavanjePK.hashCode() : 0);
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.odrzavanjeId);
+        hash = 59 * hash + this.semestar;
+        hash = 59 * hash + Objects.hashCode(this.grupaId);
+        hash = 59 * hash + Objects.hashCode(this.modul);
+        hash = 59 * hash + Objects.hashCode(this.predmet);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Odrzavanje)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Odrzavanje other = (Odrzavanje) object;
-        if ((this.odrzavanjePK == null && other.odrzavanjePK != null) || (this.odrzavanjePK != null && !this.odrzavanjePK.equals(other.odrzavanjePK))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Odrzavanje other = (Odrzavanje) obj;
+        if (this.semestar != other.semestar) {
+            return false;
+        }
+        if (!Objects.equals(this.odrzavanjeId, other.odrzavanjeId)) {
+            return false;
+        }
+        if (!Objects.equals(this.grupaId, other.grupaId)) {
+            return false;
+        }
+        if (!Objects.equals(this.modul, other.modul)) {
+            return false;
+        }
+        if (!Objects.equals(this.predmet, other.predmet)) {
             return false;
         }
         return true;
@@ -119,7 +150,9 @@ public class Odrzavanje implements Entity {
 
     @Override
     public String toString() {
-        return "rs.fon.silab.njt.web.strukturastudijskihprograma.domain.Odrzavanje[ odrzavanjePK=" + odrzavanjePK + " ]";
+        return "Odrzavanje{" + "odrzavanjeId=" + odrzavanjeId + ", semestar=" + semestar + ", grupaId=" + grupaId + ", modul=" + modul + ", predmet=" + predmet + '}';
     }
+
+    
     
 }

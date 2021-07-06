@@ -44,6 +44,10 @@ public class Modul implements Entity {
     private String naziv;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "status")
+    private int status;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "pocetak")
     private int pocetak;
     @Basic(optional = false)
@@ -53,8 +57,8 @@ public class Modul implements Entity {
     @JoinColumn(name = "studijskiProgramId", referencedColumnName = "studijskiProgramId")
     @ManyToOne(optional = false)
     private Studijskiprogram studijskiProgramId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modul")
-    private Collection<Odrzavanje> odrzavanjeCollection;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modul")
+//    private Collection<Odrzavanje> odrzavanjeCollection;
 
     public Modul() {
     }
@@ -110,14 +114,14 @@ public class Modul implements Entity {
         this.studijskiProgramId = studijskiProgramId;
     }
 
-    @XmlTransient
-    public Collection<Odrzavanje> getOdrzavanjeCollection() {
-        return odrzavanjeCollection;
-    }
-
-    public void setOdrzavanjeCollection(Collection<Odrzavanje> odrzavanjeCollection) {
-        this.odrzavanjeCollection = odrzavanjeCollection;
-    }
+//    @XmlTransient
+//    public Collection<Odrzavanje> getOdrzavanjeCollection() {
+//        return odrzavanjeCollection;
+//    }
+//
+//    public void setOdrzavanjeCollection(Collection<Odrzavanje> odrzavanjeCollection) {
+//        this.odrzavanjeCollection = odrzavanjeCollection;
+//    }
 
     @Override
     public int hashCode() {

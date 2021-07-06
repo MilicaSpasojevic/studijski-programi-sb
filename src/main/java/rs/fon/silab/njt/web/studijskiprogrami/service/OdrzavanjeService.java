@@ -6,15 +6,15 @@
 package rs.fon.silab.njt.web.studijskiprogrami.service;
 
 import java.util.List;
-import rs.fon.silab.njt.web.studijskiprogrami.domain.PozicijaPK;
+import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeBackDto;
+import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
 
 /**
  *
  * @author Milica
  */
-public interface PozicijaService {
-    void save(List<PozicijaDto> pozicijaDto) throws Exception;
-    List<PozicijaDto> getAll() throws Exception;
-    PozicijaDto getById(PozicijaPK id) throws Exception;
+public interface OdrzavanjeService {
+    void save(List<OdrzavanjeDto> pozicijaDto) throws Exception;
+//    List<OdrzavanjeBackDto> getAll() throws Exception;
 }

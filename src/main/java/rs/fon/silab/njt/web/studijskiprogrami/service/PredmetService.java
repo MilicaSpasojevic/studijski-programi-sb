@@ -17,4 +17,5 @@ public interface PredmetService {
     List<PredmetDto> getAll() throws Exception;
     PredmetDto update(PredmetDto predmetDto) throws Exception;
     void delete(Long id) throws Exception;
+    PredmetDto findById(Long id) throws Exception;
 }
