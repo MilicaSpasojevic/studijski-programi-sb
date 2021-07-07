@@ -8,12 +8,13 @@ package rs.fon.silab.njt.web.studijskiprogrami.service;
 import java.util.List;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Tippredmeta;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
+import rs.fon.silab.njt.web.studijskiprogrami.dto.TipPredmetaDto;
 
 /**
  *
  * @author Milica
  */
 public interface TipPredmetaService {
-     List<Tippredmeta> getAll() throws Exception;
+     List<TipPredmetaDto> getAll() throws Exception;
      Tippredmeta findById(Long id) throws Exception;
 }

@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author Milica
  */
-public class TipPredmetaDto {
+public class TipPredmetaDto implements Dto{
     private Long id;
     private String naziv;
 

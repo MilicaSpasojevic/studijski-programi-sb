@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author Milica
  */
-public class GrupaPredmetaDto {
+public class GrupaPredmetaDto implements Dto{
     private Long grupaId;
     private String naziv;
 

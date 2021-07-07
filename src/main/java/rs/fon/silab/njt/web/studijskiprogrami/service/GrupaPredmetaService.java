@@ -5,7 +5,9 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.service;
 
+import java.util.List;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Grupapredmeta;
+import rs.fon.silab.njt.web.studijskiprogrami.dto.GrupaPredmetaDto;
 
 /**
  *
@@ -13,4 +15,5 @@ import rs.fon.silab.njt.web.studijskiprogrami.domain.Grupapredmeta;
  */
 public interface GrupaPredmetaService {
     Grupapredmeta findById(Long id) throws Exception;
+    List<GrupaPredmetaDto> getAll() throws Exception;
 }
