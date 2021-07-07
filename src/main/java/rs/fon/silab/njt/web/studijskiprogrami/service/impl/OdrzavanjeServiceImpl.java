@@ -5,7 +5,7 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.service.impl;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
