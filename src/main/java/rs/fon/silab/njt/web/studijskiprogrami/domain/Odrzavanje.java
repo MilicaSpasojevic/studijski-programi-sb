@@ -14,7 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -47,6 +49,16 @@ public class Odrzavanje implements Entity {
     @JoinColumn(name = "predmetId", referencedColumnName = "predmetid")
     @ManyToOne(optional = false)
     private Predmet predmet;
+    @MapsId("pozicijaId")
+    @JoinColumns({
+        @JoinColumn(name="pozicijaId", referencedColumnName="pozicijaId"),
+        @JoinColumn(name="godina", referencedColumnName="godina"),
+        @JoinColumn(name="studijskiProgramId", referencedColumnName="studijskiProgramId")
+            
+    })
+    @ManyToOne
+    private Pozicija pozicija;
+
     
     
 
@@ -64,6 +76,18 @@ public class Odrzavanje implements Entity {
     public Long getOdrzavanjeId() {
         return odrzavanjeId;
     }
+
+    public Pozicija getPozicija() {
+        return pozicija;
+    }
+
+    public void setPozicija(Pozicija pozicija) {
+        this.pozicija = pozicija;
+    }
+
+    
+    
+    
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

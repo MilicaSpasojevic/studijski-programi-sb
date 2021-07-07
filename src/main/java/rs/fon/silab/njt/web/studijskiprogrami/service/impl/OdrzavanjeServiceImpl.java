@@ -74,7 +74,7 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
                 Odrzavanje o = new Odrzavanje();
                 o.setGrupaId(grupaServ.findById(odrz.getPozicijaDto().getGrupaPredmetaId()));
                 o.setModul(modulMapper.toEntity(modulServ.findById(odrz.getModulId())));
-                System.out.println("MODUL ENT "+o.getModul() );
+                System.out.println("MODUL ENT " + o.getModul());
                 o.setSemestar(odrz.getSemestar());
                 o.setPredmet(predmetMapper.toEntity(predmetServ.findById(pred.getPredmetid())));
                 odrzavanjeRep.save(o);
@@ -85,14 +85,21 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
 
     }
 
-//    @Override
-//    public List<OdrzavanjeBackDto> getAll() throws Exception {
-//        List<Odrzavanje> odrzavanja = odrzavanjeRep.findAll();
-//        List<OdrzavanjeBackDto> odrzavanjaBackDto = new ArrayList<>();
-//        for(Odrzavanje o : odrzavanja){
-//            OdrzavanjeBackDto od = new OdrzavanjeBackDto();
-//            od.setEspb(o.getPredmet().);
-//        }
-//    }
+    @Override
+    public List<OdrzavanjeBackDto> getAll(Long modulId) throws Exception {
+        List<Odrzavanje> odrzavanja = odrzavanjeRep.findAll();
+        List<OdrzavanjeBackDto> odrzBack = new ArrayList<>();
+        for (Odrzavanje o : odrzavanja) {
+            if (o.getModul().getModulId() == modulId) {
+                OdrzavanjeBackDto odr = new OdrzavanjeBackDto();
+                odr.setPredmet(predmetMapper.toDto(o.getPredmet()));
+                odr.setPozicija(pozicijaMapper.toDto(o.getPozicija()));
+                odrzBack.add(odr);
+            }
+
+        }
+        return odrzBack;
+
+    }
 
 }

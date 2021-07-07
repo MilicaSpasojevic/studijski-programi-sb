@@ -13,70 +13,37 @@ import java.util.Objects;
  */
 public class OdrzavanjeBackDto {
     private PredmetDto predmet;
-    private GrupaPredmetaDto grupaPredmeta;
-    private TipPredmetaDto tipPredmetaDto;
-    private int semestar;
-    private int espb;
+    private PozicijaDto pozicija;
 
     public OdrzavanjeBackDto() {
     }
 
-    public OdrzavanjeBackDto(PredmetDto predmet, GrupaPredmetaDto grupaPredmeta, TipPredmetaDto tipPredmetaDto, int semestar, int espb) {
+    public OdrzavanjeBackDto(PredmetDto predmet, PozicijaDto pozicija) {
         this.predmet = predmet;
-        this.grupaPredmeta = grupaPredmeta;
-        this.tipPredmetaDto = tipPredmetaDto;
-        this.semestar = semestar;
-        this.espb = espb;
+        this.pozicija = pozicija;
     }
 
     public PredmetDto getPredmet() {
         return predmet;
     }
 
-    public GrupaPredmetaDto getGrupaPredmeta() {
-        return grupaPredmeta;
-    }
-
-    public TipPredmetaDto getTipPredmetaDto() {
-        return tipPredmetaDto;
-    }
-
-    public int getSemestar() {
-        return semestar;
-    }
-
-    public int getEspb() {
-        return espb;
+    public PozicijaDto getPozicija() {
+        return pozicija;
     }
 
     public void setPredmet(PredmetDto predmet) {
         this.predmet = predmet;
     }
 
-    public void setGrupaPredmeta(GrupaPredmetaDto grupaPredmeta) {
-        this.grupaPredmeta = grupaPredmeta;
-    }
-
-    public void setTipPredmetaDto(TipPredmetaDto tipPredmetaDto) {
-        this.tipPredmetaDto = tipPredmetaDto;
-    }
-
-    public void setSemestar(int semestar) {
-        this.semestar = semestar;
-    }
-
-    public void setEspb(int espb) {
-        this.espb = espb;
+    public void setPozicija(PozicijaDto pozicija) {
+        this.pozicija = pozicija;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 11 * hash + Objects.hashCode(this.predmet);
-        hash = 11 * hash + Objects.hashCode(this.grupaPredmeta);
-        hash = 11 * hash + Objects.hashCode(this.tipPredmetaDto);
-        hash = 11 * hash + this.semestar;
-        hash = 11 * hash + this.espb;
+        hash = 97 * hash + Objects.hashCode(this.predmet);
+        hash = 97 * hash + Objects.hashCode(this.pozicija);
         return hash;
     }
 
@@ -92,19 +59,10 @@ public class OdrzavanjeBackDto {
             return false;
         }
         final OdrzavanjeBackDto other = (OdrzavanjeBackDto) obj;
-        if (this.semestar != other.semestar) {
-            return false;
-        }
-        if (this.espb != other.espb) {
-            return false;
-        }
         if (!Objects.equals(this.predmet, other.predmet)) {
             return false;
         }
-        if (!Objects.equals(this.grupaPredmeta, other.grupaPredmeta)) {
-            return false;
-        }
-        if (!Objects.equals(this.tipPredmetaDto, other.tipPredmetaDto)) {
+        if (!Objects.equals(this.pozicija, other.pozicija)) {
             return false;
         }
         return true;
@@ -112,8 +70,10 @@ public class OdrzavanjeBackDto {
 
     @Override
     public String toString() {
-        return "OdrzavanjeBackDto{" + "predmet=" + predmet + ", grupaPredmeta=" + grupaPredmeta + ", tipPredmetaDto=" + tipPredmetaDto + ", semestar=" + semestar + ", espb=" + espb + '}';
+        return "OdrzavanjeBackDto{" + "predmet=" + predmet + ", pozicija=" + pozicija + '}';
     }
+    
+    
     
     
 }

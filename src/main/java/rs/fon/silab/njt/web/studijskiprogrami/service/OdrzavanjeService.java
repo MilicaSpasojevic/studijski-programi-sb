@@ -17,4 +17,6 @@ import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
 public interface OdrzavanjeService {
     void save(List<OdrzavanjeDto> pozicijaDto) throws Exception;
 //    List<OdrzavanjeBackDto> getAll() throws Exception;
+
+    public List<OdrzavanjeBackDto> getAll(Long modulId) throws Exception;
 }
