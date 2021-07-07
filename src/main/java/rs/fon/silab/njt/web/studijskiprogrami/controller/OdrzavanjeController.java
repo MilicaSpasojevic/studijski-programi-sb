@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,42 +29,41 @@ import rs.fon.silab.njt.web.studijskiprogrami.service.OdrzavanjeService;
 @RestController
 @RequestMapping(path = "/odrzavanje")
 public class OdrzavanjeController {
+
     private final OdrzavanjeService odrzavanjeService;
 
     @Autowired
     public OdrzavanjeController(OdrzavanjeService odrzavanjeService) {
         this.odrzavanjeService = odrzavanjeService;
     }
-    
+
     @PostMapping("/{modulId}")
-    public void save(@RequestBody List<OdrzavanjeDto> odrzavanja, @PathVariable Long modulId){
-        System.out.println("MODUL JE: "+modulId);
-        for(OdrzavanjeDto odrz : odrzavanja){
+    public ResponseEntity<String> save(@RequestBody List<OdrzavanjeDto> odrzavanja, @PathVariable Long modulId) {
+        System.out.println("MODUL JE: " + modulId);
+        for (OdrzavanjeDto odrz : odrzavanja) {
             odrz.setModulId(modulId);
         }
-        
+
         try {
             odrzavanjeService.save(odrzavanja);
+            return new ResponseEntity<>("Uspesno uneseno odrzavanje", HttpStatus.CREATED);
         } catch (Exception ex) {
             Logger.getLogger(OdrzavanjeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Neuspesno unosenje odrzavanja", HttpStatus.BAD_REQUEST);
+
         }
     }
-    
+
     @GetMapping("/{modulId}")
-    public List<OdrzavanjeBackDto> getAll(@PathVariable Long modulId){
+    public ResponseEntity<List<OdrzavanjeBackDto>> getAll(@PathVariable Long modulId) {
         List<OdrzavanjeBackDto> odrzavanja = new ArrayList<>();
         try {
             odrzavanja = odrzavanjeService.getAll(modulId);
+            
         } catch (Exception ex) {
             Logger.getLogger(OdrzavanjeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return odrzavanja;
+        return new ResponseEntity<>(odrzavanja,HttpStatus.OK);
     }
 }
-
-
-
-
-
-
-

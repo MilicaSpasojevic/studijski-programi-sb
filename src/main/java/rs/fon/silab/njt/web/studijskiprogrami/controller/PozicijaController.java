@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,7 @@ public class PozicijaController {
 
     @GetMapping()
     //@Produces(MediaType.APPLICATION_JSON_VALUE)
-    public List<PozicijaDto> getAll() {
+    public ResponseEntity<List<PozicijaDto>> getAll() {
         List<PozicijaDto> pozicije = new ArrayList<>();
         try {
             pozicije = pozicijaService.getAll();
@@ -49,14 +50,15 @@ public class PozicijaController {
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
-        return pozicije;
+        return new ResponseEntity<>(pozicije, HttpStatus.OK);
     }
 
     @PostMapping("/{idsp}/{godina}")
-    public void save(@RequestBody List<PozicijaDto> pozdto, @PathVariable Long idsp, @PathVariable Long godina){
+    public ResponseEntity<String> save(@RequestBody List<PozicijaDto> pozdto, @PathVariable Long idsp, @PathVariable Long godina){
         try {
             for(PozicijaDto poz : pozdto){
                 poz.setGodina(godina);
@@ -65,8 +67,10 @@ public class PozicijaController {
             }
             
             pozicijaService.save(pozdto);
+            return new ResponseEntity<>("Uspesno unesena pozicija", HttpStatus.CREATED);
         } catch (Exception ex) {
-            Logger.getLogger(PozicijaController.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(PozicijaController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Neuspesno unesena pozicija", HttpStatus.BAD_REQUEST);
         }
         
     }
