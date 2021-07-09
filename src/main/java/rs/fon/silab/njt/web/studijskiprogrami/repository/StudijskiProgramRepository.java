@@ -11,6 +11,7 @@ package rs.fon.silab.njt.web.studijskiprogrami.repository;
  */
 
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Studijskiprogram;
@@ -18,5 +19,5 @@ import rs.fon.silab.njt.web.studijskiprogrami.domain.Studijskiprogram;
 
 @Repository
 public interface StudijskiProgramRepository extends JpaRepository<Studijskiprogram, Long>{
-
+    List<Studijskiprogram> getByStatus(int status);
 }

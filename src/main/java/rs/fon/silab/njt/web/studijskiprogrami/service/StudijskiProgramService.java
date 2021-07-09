@@ -24,4 +24,6 @@ public interface StudijskiProgramService {
 
     StudijskiProgramDto findById(Long id) throws Exception;
 
+    List<StudijskiProgramDto> findByStatus(int status) throws Exception;
+    
 }

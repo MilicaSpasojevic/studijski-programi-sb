@@ -25,4 +25,6 @@ public interface ModulService {
 
     ModulDto findById(Long id) throws Exception;
 
+    List<ModulDto> findByStatus(int status) throws Exception;
+
 }

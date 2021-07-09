@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.ModulDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.StudijskiProgramDto;
@@ -102,6 +103,22 @@ public class ModulController {
             return new ResponseEntity<>("Neuspesno briisanje modula", HttpStatus.BAD_REQUEST);
 
         }
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<List<ModulDto>> getByStatus(@RequestParam(required = true, name = "status") int status) {
+        List<ModulDto> moduli=  new ArrayList<>();
+        try {
+            moduli = modulService.findByStatus(status);
+            for (ModulDto m : moduli) {
+                System.out.println(m);
+            }
+
+        } catch (Exception ex) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(moduli, HttpStatus.OK);
     }
 
 }
