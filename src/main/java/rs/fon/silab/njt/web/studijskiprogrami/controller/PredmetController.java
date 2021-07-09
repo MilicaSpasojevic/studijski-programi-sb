@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Predmet;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
@@ -98,6 +99,24 @@ public class PredmetController {
             return new ResponseEntity<>("Neuspesno obrisan", HttpStatus.BAD_REQUEST);
 
         }
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity<List<PredmetDto>> getByESPBandTip(@RequestParam(required = true, name="espb") Long espb, @RequestParam(required = true,name="tip") Long tipPredmetaId) {
+        List<PredmetDto> predmeti = new ArrayList<>();
+//        System.out.println(espb.getClass().getName() + " tip " + tipPredmetaId.getClass().getName());
+        try {
+            predmeti = predmetService.findByESPBandTip(espb,tipPredmetaId);
+            for (PredmetDto predmet : predmeti) {
+                System.out.println(predmet);
+            }
+
+        } catch (Exception ex) {
+//            ex.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(predmeti, HttpStatus.OK);
     }
 
 }

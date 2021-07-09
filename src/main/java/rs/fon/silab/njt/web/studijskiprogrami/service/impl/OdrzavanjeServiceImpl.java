@@ -5,7 +5,6 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.service.impl;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import rs.fon.silab.njt.web.studijskiprogrami.repository.OdrzavanjeRepository;
 import rs.fon.silab.njt.web.studijskiprogrami.repository.PozicijaRepository;
 import rs.fon.silab.njt.web.studijskiprogrami.repository.PredmetRepository;
 import rs.fon.silab.njt.web.studijskiprogrami.service.OdrzavanjeService;
+import rs.fon.silab.njt.web.studijskiprogrami.validator.Validator;
 
 /**
  *
@@ -62,15 +62,8 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
     public void save(List<OdrzavanjeDto> odrzavanjeDto) throws Exception {
         //Prebaciti u validaciju
         for (OdrzavanjeDto odrz : odrzavanjeDto) {
-            Pozicija p = pozicijaMapper.toEntity(pozicijaServ.getById(new PozicijaPK(odrz.getPozicijaDto().getPozicijaId(), odrz.getPozicijaDto().getGodina(),
-                    odrz.getPozicijaDto().getStudijskiProgramId())));
+            Validator.validirajOdrzavanja(odrz, odrzavanjeDto, pozicijaMapper, pozicijaServ);
             for (PredmetDto pred : odrz.getPredmetDto()) {
-                if (pred.getEspb() != p.getEspb()) {
-                    throw new Exception("Neodgvarajuci broj espb za poziciju");
-                }
-                if (pred.getTipPredmetaId() != odrz.getPozicijaDto().getTipPredmetaId()) {
-                    throw new Exception("Neodgvarajuci tip predmeta za poziciju");
-                }
                 Odrzavanje o = new Odrzavanje();
                 o.setGrupaId(grupaServ.findById(odrz.getPozicijaDto().getGrupaPredmetaId()));
                 o.setModul(modulMapper.toEntity(modulServ.findById(odrz.getModulId())));
@@ -78,7 +71,6 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
                 o.setSemestar(odrz.getSemestar());
                 o.setPredmet(predmetMapper.toEntity(predmetServ.findById(pred.getPredmetid())));
                 odrzavanjeRep.save(o);
-
             }
 
         }

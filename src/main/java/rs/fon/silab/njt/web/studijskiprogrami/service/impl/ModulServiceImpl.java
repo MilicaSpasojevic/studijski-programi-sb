@@ -56,7 +56,6 @@ public class ModulServiceImpl implements ModulService {
         modul.setKraj(modulDto.getKraj());
         modul.setPocetak(modulDto.getPocetak());
         modul.setNaziv(modulDto.getNaziv());
-        System.err.println("NE VALJA BURAZERU " + new StudijskiProgramMapper().toEntity(spService.findById(modulDto.getStudijskiProgramId())));
         modul.setStudijskiProgramId(new StudijskiProgramMapper().toEntity(spService.findById(modulDto.getStudijskiProgramId())));
 
         modulRepository.save(modul);

@@ -11,6 +11,6 @@ import java.io.Serializable;
  *
  * @author korisnik
  */
-public interface Dto extends  Serializable{
+public interface Dto extends Serializable{
     
 }

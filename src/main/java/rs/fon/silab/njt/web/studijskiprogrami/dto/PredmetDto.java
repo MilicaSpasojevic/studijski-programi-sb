@@ -6,15 +6,22 @@
 package rs.fon.silab.njt.web.studijskiprogrami.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Milica
  */
 public class PredmetDto implements Dto{
+    
     Long predmetid;
+    
     Long espb;
+    
     String naziv;
+    
     Long tipPredmetaId;
 
     public PredmetDto() {

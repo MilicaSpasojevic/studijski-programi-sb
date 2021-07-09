@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Predmet;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
 import rs.fon.silab.njt.web.studijskiprogrami.mapper.impl.PredmetMapper;
@@ -24,11 +25,11 @@ import rs.fon.silab.njt.web.studijskiprogrami.service.TipPredmetaService;
  */
 @Service
 @Transactional
-public class PredmetServiceImpl implements PredmetService{
-
+public class PredmetServiceImpl implements PredmetService {
+    
     private final PredmetRepository predmetRepository;
     private final PredmetMapper predmetMapper;
-
+    
     private final TipPredmetaService tpService;
     
     @Autowired
@@ -37,8 +38,7 @@ public class PredmetServiceImpl implements PredmetService{
         this.predmetMapper = predmetMapper;
         this.tpService = tpService;
     }
-
-
+    
     @Override
     public PredmetDto save(PredmetDto predmetDto) throws Exception {
         Predmet predmet = new Predmet();
@@ -50,10 +50,9 @@ public class PredmetServiceImpl implements PredmetService{
         return predmetMapper.toDto(predmet);
         
     }
-
+    
     @Override
     public List<PredmetDto> getAll() throws Exception {
-       
         
         List<Predmet> predmeti = predmetRepository.findAll();
         System.out.println(predmeti);
@@ -61,7 +60,7 @@ public class PredmetServiceImpl implements PredmetService{
             return predmetMapper.toDto(predmet);
         }).collect(Collectors.toList());
     }
-
+    
     @Override
     public PredmetDto update(PredmetDto predmetDto) throws Exception {
         Predmet predmet = new Predmet();
@@ -73,19 +72,25 @@ public class PredmetServiceImpl implements PredmetService{
         predmetRepository.save(predmet);
         return predmetMapper.toDto(predmet);
     }
-
+    
     @Override
     public void delete(Long id) throws Exception {
         Predmet predmet = predmetRepository.getById(id);
         predmetRepository.delete(predmet);
     }
-
+    
     @Override
     public PredmetDto findById(Long id) throws Exception {
         return predmetMapper.toDto(predmetRepository.getById(id));
     }
     
-    
-    
+    @Override
+    public List<PredmetDto> findByESPBandTip(Long espb,Long tipPredmetaId) throws Exception {
+        List<Predmet> predmeti = predmetRepository.findByESPBandTip(espb, tpService.findById(tipPredmetaId));
+        System.out.println(predmeti);
+        return predmeti.stream().map(predmet -> {
+            return predmetMapper.toDto(predmet);
+        }).collect(Collectors.toList());
+    }
     
 }
