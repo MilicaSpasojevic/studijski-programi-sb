@@ -54,11 +54,11 @@ public class OdrzavanjeController {
         }
     }
 
-    @GetMapping("/{modulId}")
-    public ResponseEntity<List<OdrzavanjeBackDto>> getAll(@PathVariable Long modulId) {
+    @GetMapping("/{modulId}/{godinaId}")
+    public ResponseEntity<List<OdrzavanjeBackDto>> getAll(@PathVariable Long modulId, @PathVariable Long godinaId) {
         List<OdrzavanjeBackDto> odrzavanja = new ArrayList<>();
         try {
-            odrzavanja = odrzavanjeService.getAll(modulId);
+            odrzavanja = odrzavanjeService.getAll(modulId,godinaId);
             
         } catch (Exception ex) {
             Logger.getLogger(OdrzavanjeController.class.getName()).log(Level.SEVERE, null, ex);

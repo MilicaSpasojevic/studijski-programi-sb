@@ -5,6 +5,7 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.dto;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,27 +13,27 @@ import java.util.Objects;
  * @author Milica
  */
 public class OdrzavanjeBackDto {
-    private PredmetDto predmet;
+    private List<PredmetDto> predmeti;
     private PozicijaDto pozicija;
 
     public OdrzavanjeBackDto() {
     }
 
-    public OdrzavanjeBackDto(PredmetDto predmet, PozicijaDto pozicija) {
-        this.predmet = predmet;
+    public OdrzavanjeBackDto(List<PredmetDto> predmeti, PozicijaDto pozicija) {
+        this.predmeti = predmeti;
         this.pozicija = pozicija;
     }
 
-    public PredmetDto getPredmet() {
-        return predmet;
+    public List<PredmetDto> getPredmeti() {
+        return predmeti;
     }
 
     public PozicijaDto getPozicija() {
         return pozicija;
     }
 
-    public void setPredmet(PredmetDto predmet) {
-        this.predmet = predmet;
+    public void setPredmeti(List<PredmetDto> predmeti) {
+        this.predmeti = predmeti;
     }
 
     public void setPozicija(PozicijaDto pozicija) {
@@ -42,7 +43,7 @@ public class OdrzavanjeBackDto {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.predmet);
+        hash = 97 * hash + Objects.hashCode(this.predmeti);
         hash = 97 * hash + Objects.hashCode(this.pozicija);
         return hash;
     }
@@ -59,7 +60,7 @@ public class OdrzavanjeBackDto {
             return false;
         }
         final OdrzavanjeBackDto other = (OdrzavanjeBackDto) obj;
-        if (!Objects.equals(this.predmet, other.predmet)) {
+        if (!Objects.equals(this.predmeti, other.predmeti)) {
             return false;
         }
         if (!Objects.equals(this.pozicija, other.pozicija)) {
@@ -70,7 +71,7 @@ public class OdrzavanjeBackDto {
 
     @Override
     public String toString() {
-        return "OdrzavanjeBackDto{" + "predmet=" + predmet + ", pozicija=" + pozicija + '}';
+        return "OdrzavanjeBackDto{" + "predmet=" + predmeti + ", pozicija=" + pozicija + '}';
     }
     
     
