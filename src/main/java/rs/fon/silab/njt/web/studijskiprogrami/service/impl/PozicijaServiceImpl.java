@@ -60,7 +60,7 @@ public class PozicijaServiceImpl implements PozicijaService{
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
     public void save(List<PozicijaDto> pozicijaDto) throws Exception {
-        Validator.validirajPozicije(pozicijaDto);
+//        Validator.validirajPozicije(pozicijaDto);
         List<Pozicija> pozicije = new ArrayList<>();
         for(PozicijaDto poz : pozicijaDto){
             Pozicija p = new Pozicija();

@@ -5,10 +5,12 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Pozicija;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.PozicijaPK;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Studijskiprogram;
 
 /**
  *
@@ -16,5 +18,5 @@ import rs.fon.silab.njt.web.studijskiprogrami.domain.PozicijaPK;
  */
 @Repository
 public interface PozicijaRepository extends JpaRepository<Pozicija, PozicijaPK>{
-    
+    List<Pozicija> findByStudijskiprogram(Studijskiprogram studijskiprogram);
 }

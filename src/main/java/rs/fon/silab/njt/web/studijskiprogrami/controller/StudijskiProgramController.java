@@ -101,7 +101,7 @@ public class StudijskiProgramController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<List<StudijskiProgramDto>> getByStatus(@RequestParam(required = true, name ="status") int status) {
+    public ResponseEntity<List<StudijskiProgramDto>> getByStatus(@RequestParam(required = true, name = "status") int status) {
         List<StudijskiProgramDto> studijskiProgrami = new ArrayList<>();
         try {
             studijskiProgrami = studijskiProgramService.findByStatus(status);
@@ -115,4 +115,17 @@ public class StudijskiProgramController {
 
         return new ResponseEntity<>(studijskiProgrami, HttpStatus.OK);
     }
+
+    @PutMapping("/objavi")
+    public ResponseEntity<String> publish(@RequestParam(required = true, name="id") Long id) {
+        try {
+            studijskiProgramService.publish(id);
+            return new ResponseEntity<>("Uspesno sacuvan", HttpStatus.OK);
+
+        } catch (Exception ex) {
+//            Logger.getLogger(StudijskiProgramController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Neuspesno sacuvan", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
