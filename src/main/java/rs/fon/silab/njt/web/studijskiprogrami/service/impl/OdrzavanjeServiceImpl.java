@@ -97,9 +97,7 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
                 odr.setPredmeti(findByPozicija(p));
                 odrzBack.add(odr);
             }
-
         }
-        
         return odrzBack;
     }
 
