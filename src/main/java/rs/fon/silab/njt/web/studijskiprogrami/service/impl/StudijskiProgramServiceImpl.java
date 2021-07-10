@@ -27,6 +27,7 @@ import rs.fon.silab.njt.web.studijskiprogrami.service.NivoStudijaService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.PredmetService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.StudijskiProgramService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.TipPredmetaService;
+import rs.fon.silab.njt.web.studijskiprogrami.validator.Validator;
 
 /**
  *
@@ -110,25 +111,11 @@ public class StudijskiProgramServiceImpl implements StudijskiProgramService {
     }
 
     @Override
-    public void publish(Long id) {
+    public void publish(Long id) throws Exception{
         Studijskiprogram studijskiprogram = spRepository.getById(id);
         List<Pozicija> pozicije = pozicijaRepository.findByStudijskiprogram(studijskiprogram);
-//        boolean ok = true;
-        for (int i = 1; i <= studijskiprogram.getBrojSemestara() / 2; i++) {
-            int zbirEspb = 0;
-            for (Pozicija pozicija : pozicije) {
-                if (pozicija.getPozicijaPK().getGodina() == i) {
-                    zbirEspb += pozicija.getEspb();
-                }
-            }
-            if (zbirEspb != 60) {
-//                ok=false;
-                return;
-            }
-        }
-//        if(ok){
+        Validator.validirajObjavljivanjeSP(studijskiprogram, pozicije);
         spRepository.publish(id);
-//        }
     }
 
 }

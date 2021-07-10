@@ -26,6 +26,6 @@ public interface StudijskiProgramService {
 
     List<StudijskiProgramDto> findByStatus(int status) throws Exception;
 
-    public void publish(Long id);
+    public void publish(Long id) throws Exception;
     
 }

@@ -51,7 +51,7 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
     @Autowired
     public OdrzavanjeServiceImpl(OdrzavanjeRepository odrzavanjeRep, PozicijaServiceImpl pozicijaServ,
             PredmetServiceImpl predmetServ, GrupaPredmetaServiceImpl grupaServ, ModulServiceImpl modulServ,
-            PozicijaMapper pozicijaMapper, ModulMapper modulMapper, PredmetMapper predmetMapper, 
+            PozicijaMapper pozicijaMapper, ModulMapper modulMapper, PredmetMapper predmetMapper,
             PozicijaRepository pozicijaRep, ModulRepository modulRep) {
         this.odrzavanjeRep = odrzavanjeRep;
         this.pozicijaServ = pozicijaServ;
@@ -90,9 +90,9 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
         List<Pozicija> pozicije = pozicijaRep.findAll();
         List<OdrzavanjeBackDto> odrzBack = new ArrayList<>();
         Modul m = modulRep.getById(modulId);
-        
+
         for (Pozicija p : pozicije) {
-            if (p.getPozicijaPK().getGodina() == godinaId && p.getStudijskiprogram().getStudijskiProgramId()==m.getStudijskiProgramId().getStudijskiProgramId()) {
+            if (p.getPozicijaPK().getGodina() == godinaId && p.getStudijskiprogram().getStudijskiProgramId() == m.getStudijskiProgramId().getStudijskiProgramId()) {
                 OdrzavanjeBackDto odr = new OdrzavanjeBackDto();
                 odr.setPozicija(pozicijaMapper.toDto(p));
                 odr.setPredmeti(findByPozicija(p));
@@ -107,11 +107,11 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
     public List<PredmetDto> findByPozicija(Pozicija pozicija) {
         List<Odrzavanje> odrzavanja = odrzavanjeRep.findByPozicija(pozicija);
         List<PredmetDto> predmeti = new ArrayList<>();
-        
+
         for (Odrzavanje o : odrzavanja) {
             predmeti.add(predmetMapper.toDto(o.getPredmet()));
         }
-        
+
         return predmeti;
     }
 
@@ -120,13 +120,22 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
         List<Odrzavanje> odrzavanja = odrzavanjeRep.findByModul(modul);
         List<OdrzavanjeBackDto> odrzBack = new ArrayList<>();
         for (Odrzavanje o : odrzavanja) {
+            boolean unesen = false;
+            for (OdrzavanjeBackDto obd : odrzBack) {
+                if (obd.getPozicija().getPozicijaId() == o.getPozicija().getPozicijaPK().getPozicijaId()
+                        && obd.getPozicija().getGodina() == o.getPozicija().getPozicijaPK().getGodina()) {
+                    unesen = true;
+                }
+            }
+            if (!unesen) {
                 OdrzavanjeBackDto odr = new OdrzavanjeBackDto();
-                odr.setPredmet(predmetMapper.toDto(o.getPredmet()));
+                odr.setPredmeti(findByPozicija(o.getPozicija()));
                 odr.setPozicija(pozicijaMapper.toDto(o.getPozicija()));
                 odrzBack.add(odr);
-
+            }
         }
         return odrzBack;
+
     }
 
 }
