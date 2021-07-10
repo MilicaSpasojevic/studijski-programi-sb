@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Modul;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Odrzavanje;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Pozicija;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.PozicijaPK;
@@ -92,6 +93,20 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
         }
         return odrzBack;
 
+    }
+
+    @Override
+    public List<OdrzavanjeBackDto> getByModul(Modul modul) throws Exception {
+        List<Odrzavanje> odrzavanja = odrzavanjeRep.findByModul(modul);
+        List<OdrzavanjeBackDto> odrzBack = new ArrayList<>();
+        for (Odrzavanje o : odrzavanja) {
+                OdrzavanjeBackDto odr = new OdrzavanjeBackDto();
+                odr.setPredmet(predmetMapper.toDto(o.getPredmet()));
+                odr.setPozicija(pozicijaMapper.toDto(o.getPozicija()));
+                odrzBack.add(odr);
+
+        }
+        return odrzBack;
     }
 
 }
