@@ -6,6 +6,7 @@
 package rs.fon.silab.njt.web.studijskiprogrami.service;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
 
 /**
@@ -18,4 +19,5 @@ public interface PredmetService {
     PredmetDto update(PredmetDto predmetDto) throws Exception;
     void delete(Long id) throws Exception;
     PredmetDto findById(Long id) throws Exception;
+    List<PredmetDto> findByESPBandTip(Long espb,Long tipPredmetaId) throws Exception;
 }

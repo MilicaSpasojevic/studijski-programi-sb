@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.StudijskiProgramDto;
 import rs.fon.silab.njt.web.studijskiprogrami.service.FakultetService;
@@ -83,7 +84,7 @@ public class StudijskiProgramController {
 
         } catch (Exception ex) {
 //            Logger.getLogger(StudijskiProgramController.class.getName()).log(Level.SEVERE, null, ex);
-              return new ResponseEntity<>("Neuspesno sacuvan", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Neuspesno sacuvan", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -99,4 +100,19 @@ public class StudijskiProgramController {
         }
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<List<StudijskiProgramDto>> getByStatus(@RequestParam(required = true, name ="status") int status) {
+        List<StudijskiProgramDto> studijskiProgrami = new ArrayList<>();
+        try {
+            studijskiProgrami = studijskiProgramService.findByStatus(status);
+            for (StudijskiProgramDto sp : studijskiProgrami) {
+                System.out.println(sp);
+            }
+
+        } catch (Exception ex) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(studijskiProgrami, HttpStatus.OK);
+    }
 }

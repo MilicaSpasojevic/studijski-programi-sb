@@ -8,6 +8,7 @@ package rs.fon.silab.njt.web.studijskiprogrami.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import rs.fon.silab.njt.web.studijskiprogrami.service.GrupaPredmetaService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.PozicijaService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.StudijskiProgramService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.TipPredmetaService;
+import rs.fon.silab.njt.web.studijskiprogrami.validator.Validator;
 
 /**
  *
@@ -58,13 +60,7 @@ public class PozicijaServiceImpl implements PozicijaService{
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
     public void save(List<PozicijaDto> pozicijaDto) throws Exception {
-        int brojEspb = 0;
-        for(PozicijaDto poz : pozicijaDto){
-            brojEspb+=poz.getEspb();
-        }
-        if(brojEspb!=60){
-            throw new Exception("Broj espb mora biti 60!");
-        }
+        Validator.validirajPozicije(pozicijaDto);
         List<Pozicija> pozicije = new ArrayList<>();
         for(PozicijaDto poz : pozicijaDto){
             Pozicija p = new Pozicija();

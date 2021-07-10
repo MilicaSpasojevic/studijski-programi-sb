@@ -5,6 +5,7 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -95,6 +96,16 @@ public class StudijskiProgramServiceImpl implements StudijskiProgramService{
     public StudijskiProgramDto findById(Long id) throws Exception {
        Studijskiprogram studijskiprogram = spRepository.getById(id);
        return spMapper.toDto(studijskiprogram);
+    }
+
+    @Override
+    public List<StudijskiProgramDto> findByStatus(int status) throws Exception {
+        List<Studijskiprogram> studijskiprogrami = spRepository.getByStatus(status);
+        List<StudijskiProgramDto> studijskiProgramDtos = new ArrayList<>();
+        for (Studijskiprogram sp : studijskiprogrami) {
+            studijskiProgramDtos.add(spMapper.toDto(sp));
+        }
+        return studijskiProgramDtos;
     }
     
     

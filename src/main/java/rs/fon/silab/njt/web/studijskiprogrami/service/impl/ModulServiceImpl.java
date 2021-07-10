@@ -5,6 +5,7 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -56,7 +57,6 @@ public class ModulServiceImpl implements ModulService {
         modul.setKraj(modulDto.getKraj());
         modul.setPocetak(modulDto.getPocetak());
         modul.setNaziv(modulDto.getNaziv());
-        System.err.println("NE VALJA BURAZERU " + new StudijskiProgramMapper().toEntity(spService.findById(modulDto.getStudijskiProgramId())));
         modul.setStudijskiProgramId(new StudijskiProgramMapper().toEntity(spService.findById(modulDto.getStudijskiProgramId())));
 
         modulRepository.save(modul);
@@ -92,6 +92,16 @@ public class ModulServiceImpl implements ModulService {
     public ModulDto findById(Long id) throws Exception {
         Modul modul = modulRepository.getById(id);
         return modulMapper.toDto(modul);
+    }
+
+    @Override
+    public List<ModulDto> findByStatus(int status) throws Exception {
+        List<Modul> moduli = modulRepository.getByStatus(status);
+        List<ModulDto> moduliDtos = new ArrayList<>();
+        for (Modul m : moduli) {
+            moduliDtos.add(modulMapper.toDto(m));
+        }
+        return moduliDtos;
     }
 
 }
