@@ -6,6 +6,7 @@
 package rs.fon.silab.njt.web.studijskiprogrami.service;
 
 import java.util.List;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Modul;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeBackDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
@@ -19,4 +20,5 @@ public interface OdrzavanjeService {
 //    List<OdrzavanjeBackDto> getAll() throws Exception;
 
     public List<OdrzavanjeBackDto> getAll(Long modulId) throws Exception;
+    public List<OdrzavanjeBackDto> getByModul(Modul modul) throws Exception;
 }
