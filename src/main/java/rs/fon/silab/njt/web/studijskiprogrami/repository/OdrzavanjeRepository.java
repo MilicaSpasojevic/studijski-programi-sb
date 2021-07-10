@@ -5,8 +5,10 @@
  */
 package rs.fon.silab.njt.web.studijskiprogrami.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Modul;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Odrzavanje;
 
 /**
@@ -15,5 +17,5 @@ import rs.fon.silab.njt.web.studijskiprogrami.domain.Odrzavanje;
  */
 @Repository
 public interface OdrzavanjeRepository extends JpaRepository<Odrzavanje, Long>{
-    
+    List<Odrzavanje> findByModul(Modul modul);
 }
