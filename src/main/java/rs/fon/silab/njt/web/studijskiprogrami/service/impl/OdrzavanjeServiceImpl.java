@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Modul;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Odrzavanje;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Pozicija;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Modul;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.PozicijaPK;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Predmet;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeBackDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
@@ -37,17 +39,20 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
 
     private final OdrzavanjeRepository odrzavanjeRep;
     private final PozicijaServiceImpl pozicijaServ;
+    private final PozicijaRepository pozicijaRep;
     private final PredmetServiceImpl predmetServ;
     private final GrupaPredmetaServiceImpl grupaServ;
     private final ModulServiceImpl modulServ;
     private final PozicijaMapper pozicijaMapper;
     private final ModulMapper modulMapper;
+    private final ModulRepository modulRep;
     private final PredmetMapper predmetMapper;
 
     @Autowired
     public OdrzavanjeServiceImpl(OdrzavanjeRepository odrzavanjeRep, PozicijaServiceImpl pozicijaServ,
             PredmetServiceImpl predmetServ, GrupaPredmetaServiceImpl grupaServ, ModulServiceImpl modulServ,
-            PozicijaMapper pozicijaMapper, ModulMapper modulMapper, PredmetMapper predmetMapper) {
+            PozicijaMapper pozicijaMapper, ModulMapper modulMapper, PredmetMapper predmetMapper, 
+            PozicijaRepository pozicijaRep, ModulRepository modulRep) {
         this.odrzavanjeRep = odrzavanjeRep;
         this.pozicijaServ = pozicijaServ;
         this.predmetServ = predmetServ;
@@ -56,6 +61,8 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
         this.pozicijaMapper = pozicijaMapper;
         this.modulMapper = modulMapper;
         this.predmetMapper = predmetMapper;
+        this.pozicijaRep = pozicijaRep;
+        this.modulRep = modulRep;
     }
 
     @Override
@@ -79,20 +86,33 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
     }
 
     @Override
-    public List<OdrzavanjeBackDto> getAll(Long modulId) throws Exception {
-        List<Odrzavanje> odrzavanja = odrzavanjeRep.findAll();
+    public List<OdrzavanjeBackDto> getAll(Long modulId, Long godinaId) throws Exception {
+        List<Pozicija> pozicije = pozicijaRep.findAll();
         List<OdrzavanjeBackDto> odrzBack = new ArrayList<>();
-        for (Odrzavanje o : odrzavanja) {
-            if (o.getModul().getModulId() == modulId) {
+        Modul m = modulRep.getById(modulId);
+        
+        for (Pozicija p : pozicije) {
+            if (p.getPozicijaPK().getGodina() == godinaId && p.getStudijskiprogram().getStudijskiProgramId()==m.getStudijskiProgramId().getStudijskiProgramId()) {
                 OdrzavanjeBackDto odr = new OdrzavanjeBackDto();
-                odr.setPredmet(predmetMapper.toDto(o.getPredmet()));
-                odr.setPozicija(pozicijaMapper.toDto(o.getPozicija()));
+                odr.setPozicija(pozicijaMapper.toDto(p));
+                odr.setPredmeti(findByPozicija(p));
                 odrzBack.add(odr);
             }
 
         }
         return odrzBack;
+    }
 
+    @Override
+    public List<PredmetDto> findByPozicija(Pozicija pozicija) {
+        List<Odrzavanje> odrzavanja = odrzavanjeRep.findByPozicija(pozicija);
+        List<PredmetDto> predmeti = new ArrayList<>();
+        
+        for (Odrzavanje o : odrzavanja) {
+            predmeti.add(predmetMapper.toDto(o.getPredmet()));
+        }
+        
+        return predmeti;
     }
 
     @Override
