@@ -16,6 +16,7 @@ import rs.fon.silab.njt.web.studijskiprogrami.domain.Pozicija;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Modul;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.PozicijaPK;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Predmet;
+import rs.fon.silab.njt.web.studijskiprogrami.dto.ModulDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeBackDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
@@ -116,8 +117,9 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
     }
 
     @Override
-    public List<OdrzavanjeBackDto> getByModul(Modul modul) throws Exception {
-        List<Odrzavanje> odrzavanja = odrzavanjeRep.findByModul(modul);
+    public List<OdrzavanjeBackDto> getByModul(Long modulId) throws Exception {
+        ModulDto modul = modulServ.findById(modulId);
+        List<Odrzavanje> odrzavanja = odrzavanjeRep.findByModul(modulMapper.toEntity(modul));
         List<OdrzavanjeBackDto> odrzBack = new ArrayList<>();
         for (Odrzavanje o : odrzavanja) {
             boolean unesen = false;

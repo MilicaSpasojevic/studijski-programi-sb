@@ -80,8 +80,7 @@ public class OdrzavanjeController {
     public ResponseEntity<List<OdrzavanjeBackDto>> getByModul(@RequestParam(required = true, name = "modul") Long modul) {
         List<OdrzavanjeBackDto> odrzavanja = new ArrayList<>();
         try {
-            ModulDto m = modulService.findById(modul);
-            odrzavanja = odrzavanjeService.getByModul(modulMapper.toEntity(m));
+            odrzavanja = odrzavanjeService.getByModul(modul);
 
         } catch (Exception ex) {
             Logger.getLogger(OdrzavanjeController.class.getName()).log(Level.SEVERE, null, ex);
