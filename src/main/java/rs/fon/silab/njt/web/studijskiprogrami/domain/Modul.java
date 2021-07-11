@@ -67,11 +67,12 @@ public class Modul implements Entity {
         this.modulId = modulId;
     }
 
-    public Modul(Long modulId, String naziv, int pocetak, int kraj) {
+    public Modul(Long modulId, String naziv, int pocetak, int kraj, int status) {
         this.modulId = modulId;
         this.naziv = naziv;
         this.pocetak = pocetak;
         this.kraj = kraj;
+        this.status = status;
     }
 
     public Long getModulId() {
@@ -114,15 +115,14 @@ public class Modul implements Entity {
         this.studijskiProgramId = studijskiProgramId;
     }
 
-//    @XmlTransient
-//    public Collection<Odrzavanje> getOdrzavanjeCollection() {
-//        return odrzavanjeCollection;
-//    }
-//
-//    public void setOdrzavanjeCollection(Collection<Odrzavanje> odrzavanjeCollection) {
-//        this.odrzavanjeCollection = odrzavanjeCollection;
-//    }
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

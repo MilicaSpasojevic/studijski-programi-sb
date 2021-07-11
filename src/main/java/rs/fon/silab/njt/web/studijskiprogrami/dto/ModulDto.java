@@ -6,7 +6,6 @@
 package rs.fon.silab.njt.web.studijskiprogrami.dto;
 
 import java.util.Objects;
-import rs.fon.silab.njt.web.studijskiprogrami.domain.Studijskiprogram;
 
 /**
  *
@@ -17,15 +16,17 @@ public class ModulDto implements Dto {
     private Long modulId;
     private int pocetak;
     private int kraj;
+    private int status;
     private String naziv;
     private Long studijskiProgramId;
 
-    public ModulDto(Long modulId, int pocetak, int kraj, String naziv, Long studijskiProgramId) {
+    public ModulDto(Long modulId, int pocetak, int kraj, String naziv, Long studijskiProgramId, int status) {
         this.modulId = modulId;
         this.pocetak = pocetak;
         this.kraj = kraj;
         this.naziv = naziv;
         this.studijskiProgramId = studijskiProgramId;
+        this.status = status;
     }
 
     public ModulDto() {
@@ -71,6 +72,14 @@ public class ModulDto implements Dto {
         this.studijskiProgramId = studijskiProgramId;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -95,6 +104,9 @@ public class ModulDto implements Dto {
         if (this.kraj != other.kraj) {
             return false;
         }
+        if (this.status != other.status) {
+            return false;
+        }
         if (!Objects.equals(this.naziv, other.naziv)) {
             return false;
         }
@@ -109,8 +121,10 @@ public class ModulDto implements Dto {
 
     @Override
     public String toString() {
-        return "ModulDto{" + "modulId=" + modulId + ", pocetak=" + pocetak + ", kraj=" + kraj + ", naziv=" + naziv + ", studijskiProgramId=" + studijskiProgramId + '}';
+        return "ModulDto{" + "modulId=" + modulId + ", pocetak=" + pocetak + ", kraj=" + kraj + ", status=" + status + ", naziv=" + naziv + ", studijskiProgramId=" + studijskiProgramId + '}';
     }
+
+    
 
     
 }

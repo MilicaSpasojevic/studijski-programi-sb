@@ -84,7 +84,7 @@ public class ModulServiceImpl implements ModulService {
 
     @Override
     public ModulDto update(ModulDto modulDto) throws Exception {
-        Modul modul = new Modul(modulDto.getModulId(), modulDto.getNaziv(), modulDto.getPocetak(), modulDto.getKraj());
+        Modul modul = new Modul(modulDto.getModulId(), modulDto.getNaziv(), modulDto.getPocetak(), modulDto.getKraj(), modulDto.getStatus());
 
         modulRepository.save(modul);
         return modulMapper.toDto(modul);

@@ -21,12 +21,12 @@ public class ModulMapper implements EntityDtoMapper<ModulDto, Modul>{
 
     @Override
     public ModulDto toDto(Modul entity) {
-        return new ModulDto(entity.getModulId(), entity.getPocetak(), entity.getKraj(), entity.getNaziv(), entity.getStudijskiProgramId().getStudijskiProgramId());
+        return new ModulDto(entity.getModulId(), entity.getPocetak(), entity.getKraj(), entity.getNaziv(), entity.getStudijskiProgramId().getStudijskiProgramId(), entity.getStatus());
     }
 
     @Override
     public Modul toEntity(ModulDto dto) {
-        return new Modul(dto.getModulId(), dto.getNaziv(), dto.getPocetak(), dto.getKraj());
+        return new Modul(dto.getModulId(), dto.getNaziv(), dto.getPocetak(), dto.getKraj(), dto.getStatus());
     }
     
 }
