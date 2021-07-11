@@ -7,6 +7,7 @@ package rs.fon.silab.njt.web.studijskiprogrami.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,10 +76,12 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
             for (PredmetDto pred : odrz.getPredmetDto()) {
                 Odrzavanje o = new Odrzavanje();
                 o.setGrupaId(grupaServ.findById(odrz.getPozicijaDto().getGrupaPredmetaId()));
-                o.setModul(modulMapper.toEntity(modulServ.findById(odrz.getModulId())));
+                o.setModul(modulRep.getById(odrz.getModulId()));
                 System.out.println("MODUL ENT " + o.getModul());
                 o.setSemestar(odrz.getSemestar());
                 o.setPredmet(predmetMapper.toEntity(predmetServ.findById(pred.getPredmetid())));
+                Pozicija p = pozicijaRep.getById(new PozicijaPK(odrz.getPozicijaDto().getPozicijaId(), odrz.getPozicijaDto().getGodina(), odrz.getPozicijaDto().getStudijskiProgramId()));
+                o.setPozicija(p);
                 odrzavanjeRep.save(o);
             }
 
@@ -91,7 +94,11 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
         List<Pozicija> pozicije = pozicijaRep.findAll();
         List<OdrzavanjeBackDto> odrzBack = new ArrayList<>();
         Modul m = modulRep.getById(modulId);
-
+        
+        if(m.getStudijskiProgramId().getStatus()==0){
+            throw new Exception("Studijski program nije objavljen");
+        }
+        
         for (Pozicija p : pozicije) {
             if (p.getPozicijaPK().getGodina() == godinaId && p.getStudijskiprogram().getStudijskiProgramId() == m.getStudijskiProgramId().getStudijskiProgramId()) {
                 OdrzavanjeBackDto odr = new OdrzavanjeBackDto();

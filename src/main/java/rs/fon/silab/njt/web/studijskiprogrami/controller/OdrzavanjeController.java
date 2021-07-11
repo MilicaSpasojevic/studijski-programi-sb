@@ -46,13 +46,8 @@ public class OdrzavanjeController {
         this.modulMapper = modulMapper;
     }
 
-    @PostMapping("/{modulId}")
-    public ResponseEntity<String> save(@RequestBody List<OdrzavanjeDto> odrzavanja, @PathVariable Long modulId) {
-        System.out.println("MODUL JE: " + modulId);
-        for (OdrzavanjeDto odrz : odrzavanja) {
-            odrz.setModulId(modulId);
-        }
-
+    @PostMapping("/sacuvaj")
+    public ResponseEntity<String> save(@RequestBody List<OdrzavanjeDto> odrzavanja) {
         try {
             odrzavanjeService.save(odrzavanja);
             return new ResponseEntity<>("Uspesno uneseno odrzavanje", HttpStatus.CREATED);

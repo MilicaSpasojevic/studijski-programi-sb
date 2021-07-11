@@ -7,10 +7,13 @@ package rs.fon.silab.njt.web.studijskiprogrami.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Grupapredmeta;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Modul;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Odrzavanje;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Pozicija;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Predmet;
 
 /**
  *

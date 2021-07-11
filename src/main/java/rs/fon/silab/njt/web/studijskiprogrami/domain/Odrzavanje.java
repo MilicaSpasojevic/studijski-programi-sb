@@ -8,8 +8,11 @@ package rs.fon.silab.njt.web.studijskiprogrami.domain;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,14 +52,13 @@ public class Odrzavanje implements Entity {
     @JoinColumn(name = "predmetId", referencedColumnName = "predmetid")
     @ManyToOne(optional = false)
     private Predmet predmet;
-    @MapsId("pozicijaId")
+    @ManyToOne(optional = false)
     @JoinColumns({
-        @JoinColumn(name="pozicijaId", referencedColumnName="pozicijaId"),
-        @JoinColumn(name="godina", referencedColumnName="godina"),
-        @JoinColumn(name="studijskiProgramId", referencedColumnName="studijskiProgramId")
+        @JoinColumn(name="pozicijaId", referencedColumnName="pozicijaId", insertable = true),
+        @JoinColumn(name="godina", referencedColumnName="godina", insertable = true),
+        @JoinColumn(name="studijskiProgramId", referencedColumnName="studijskiProgramId", insertable = true)
             
     })
-    @ManyToOne
     private Pozicija pozicija;
 
     
