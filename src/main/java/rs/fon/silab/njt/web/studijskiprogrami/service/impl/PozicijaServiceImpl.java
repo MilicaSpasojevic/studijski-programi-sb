@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Pozicija;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.PozicijaPK;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Studijskiprogram;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
 import rs.fon.silab.njt.web.studijskiprogrami.mapper.impl.PozicijaMapper;
 import rs.fon.silab.njt.web.studijskiprogrami.mapper.impl.StudijskiProgramMapper;
@@ -33,7 +34,7 @@ import rs.fon.silab.njt.web.studijskiprogrami.validator.Validator;
  */
 @Service
 @Transactional
-public class PozicijaServiceImpl implements PozicijaService{
+public class PozicijaServiceImpl implements PozicijaService {
 
     private final PozicijaRepository pozicijaRepository;
     private final PozicijaMapper pozicijaMapper;
@@ -43,7 +44,7 @@ public class PozicijaServiceImpl implements PozicijaService{
     private final StudijskiProgramMapper spMapper;
 
     @Autowired
-    public PozicijaServiceImpl(PozicijaRepository pozicijaRepository, PozicijaMapper pozicijaMapper, GrupaPredmetaService grupaService, 
+    public PozicijaServiceImpl(PozicijaRepository pozicijaRepository, PozicijaMapper pozicijaMapper, GrupaPredmetaService grupaService,
             TipPredmetaService tipService, StudijskiProgramService spService, StudijskiProgramMapper spMapper) {
         this.pozicijaRepository = pozicijaRepository;
         this.pozicijaMapper = pozicijaMapper;
@@ -53,16 +54,12 @@ public class PozicijaServiceImpl implements PozicijaService{
         this.spMapper = spMapper;
     }
 
-    
-    
-    
-    
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
     public void save(List<PozicijaDto> pozicijaDto) throws Exception {
 //        Validator.validirajPozicije(pozicijaDto);
         List<Pozicija> pozicije = new ArrayList<>();
-        for(PozicijaDto poz : pozicijaDto){
+        for (PozicijaDto poz : pozicijaDto) {
             Pozicija p = new Pozicija();
             p.setEspb(poz.getEspb());
             p.setGrupaPredmetaId(grupaService.findById(poz.getGrupaPredmetaId()));
@@ -72,13 +69,13 @@ public class PozicijaServiceImpl implements PozicijaService{
             pozicijaRepository.save(p);
             //pozicije.add(p);
         }
-       // pozicijaRepository.saveAll(pozicije);
+        // pozicijaRepository.saveAll(pozicije);
     }
 
     @Override
     public List<PozicijaDto> getAll() throws Exception {
-         List<Pozicija> pozicije = pozicijaRepository.findAll();
-         System.out.println(pozicije);
+        List<Pozicija> pozicije = pozicijaRepository.findAll();
+        System.out.println(pozicije);
         return pozicije.stream().map(predmet -> {
             return pozicijaMapper.toDto(predmet);
         }).collect(Collectors.toList());
@@ -88,7 +85,15 @@ public class PozicijaServiceImpl implements PozicijaService{
     public PozicijaDto getById(PozicijaPK id) throws Exception {
         return pozicijaMapper.toDto(pozicijaRepository.getById(id));
     }
-    
-    
-    
+
+    @Override
+    public List<PozicijaDto> getByStudijskiProgram(Long spid) throws Exception {
+        Studijskiprogram studijskiprogram = spMapper.toEntity(spService.findById(spid));
+        List<Pozicija> pozicije = pozicijaRepository.findByStudijskiprogram(studijskiprogram);
+        System.out.println(pozicije);
+        return pozicije.stream().map(pozicija -> {
+            return pozicijaMapper.toDto(pozicija);
+        }).collect(Collectors.toList());
+    }
+
 }

@@ -44,7 +44,6 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
     private final PozicijaRepository pozicijaRep;
     private final PredmetServiceImpl predmetServ;
     private final GrupaPredmetaServiceImpl grupaServ;
-    private final ModulServiceImpl modulServ;
     private final PozicijaMapper pozicijaMapper;
     private final ModulMapper modulMapper;
     private final ModulRepository modulRep;
@@ -52,14 +51,13 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
 
     @Autowired
     public OdrzavanjeServiceImpl(OdrzavanjeRepository odrzavanjeRep, PozicijaServiceImpl pozicijaServ,
-            PredmetServiceImpl predmetServ, GrupaPredmetaServiceImpl grupaServ, ModulServiceImpl modulServ,
+            PredmetServiceImpl predmetServ, GrupaPredmetaServiceImpl grupaServ,
             PozicijaMapper pozicijaMapper, ModulMapper modulMapper, PredmetMapper predmetMapper,
             PozicijaRepository pozicijaRep, ModulRepository modulRep) {
         this.odrzavanjeRep = odrzavanjeRep;
         this.pozicijaServ = pozicijaServ;
         this.predmetServ = predmetServ;
         this.grupaServ = grupaServ;
-        this.modulServ = modulServ;
         this.pozicijaMapper = pozicijaMapper;
         this.modulMapper = modulMapper;
         this.predmetMapper = predmetMapper;
@@ -72,6 +70,8 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
     public void save(List<OdrzavanjeDto> odrzavanjeDto) throws Exception {
         //Prebaciti u validaciju
         for (OdrzavanjeDto odrz : odrzavanjeDto) {
+            Modul m = modulRep.getById(odrz.getModulId());
+            odrzavanjeRep.DeleteByModulAndPozicija(m, pozicijaMapper.toEntity(odrz.getPozicijaDto()));
             Validator.validirajOdrzavanja(odrz, odrzavanjeDto, pozicijaMapper, pozicijaServ);
             for (PredmetDto pred : odrz.getPredmetDto()) {
                 Odrzavanje o = new Odrzavanje();
@@ -125,8 +125,8 @@ public class OdrzavanjeServiceImpl implements OdrzavanjeService {
 
     @Override
     public List<OdrzavanjeBackDto> getByModul(Long modulId) throws Exception {
-        ModulDto modul = modulServ.findById(modulId);
-        List<Odrzavanje> odrzavanja = odrzavanjeRep.findByModul(modulMapper.toEntity(modul));
+        Modul modul = modulRep.getById(modulId);
+        List<Odrzavanje> odrzavanja = odrzavanjeRep.findByModul(modul);
         List<OdrzavanjeBackDto> odrzBack = new ArrayList<>();
         for (Odrzavanje o : odrzavanja) {
             boolean unesen = false;

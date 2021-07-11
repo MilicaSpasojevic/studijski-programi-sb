@@ -23,4 +23,8 @@ import rs.fon.silab.njt.web.studijskiprogrami.domain.Predmet;
 public interface OdrzavanjeRepository extends JpaRepository<Odrzavanje, Long>{
     List<Odrzavanje> findByModul(Modul modul);
     List<Odrzavanje> findByPozicija(Pozicija pozicija);
+    
+    
+    @Query(value="DELETE FROM Odrzavanje o WHERE o.modul=?1 AND o.pozicija=?2")
+    void DeleteByModulAndPozicija(Modul modul, Pozicija pozicija);
 }

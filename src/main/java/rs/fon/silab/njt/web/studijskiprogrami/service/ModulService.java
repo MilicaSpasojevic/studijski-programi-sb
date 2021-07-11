@@ -27,4 +27,6 @@ public interface ModulService {
 
     List<ModulDto> findByStatus(int status) throws Exception;
 
+    public void publish(Long id) throws Exception;
+
 }

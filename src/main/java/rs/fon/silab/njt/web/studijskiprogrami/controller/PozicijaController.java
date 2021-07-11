@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
 import rs.fon.silab.njt.web.studijskiprogrami.service.PozicijaService;
@@ -58,20 +59,38 @@ public class PozicijaController {
     }
 
     @PostMapping("/{idsp}/{godina}")
-    public ResponseEntity<String> save(@RequestBody List<PozicijaDto> pozdto, @PathVariable Long idsp, @PathVariable Long godina){
+    public ResponseEntity<String> save(@RequestBody List<PozicijaDto> pozdto, @PathVariable Long idsp, @PathVariable Long godina) {
         try {
-            for(PozicijaDto poz : pozdto){
+            for (PozicijaDto poz : pozdto) {
                 poz.setGodina(godina);
                 poz.setStudijskiProgramId(idsp);
-                
+
             }
-            
+
             pozicijaService.save(pozdto);
             return new ResponseEntity<>("Uspesno unesena pozicija", HttpStatus.CREATED);
         } catch (Exception ex) {
 //            Logger.getLogger(PozicijaController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Neuspesno unesena pozicija", HttpStatus.BAD_REQUEST);
         }
-        
+
+    }
+
+    @GetMapping("/sp")
+    //@Produces(MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PozicijaDto>> getByStudijskiProgram(@RequestParam(required = true, name="id") Long spid) {
+        List<PozicijaDto> pozicije = new ArrayList<>();
+        try {
+            pozicije = pozicijaService.getByStudijskiProgram(spid);
+            for (PozicijaDto pozicija : pozicije) {
+                System.out.println(pozicija);
+            }
+
+        } catch (Exception ex) {
+//            ex.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(pozicije, HttpStatus.OK);
     }
 }

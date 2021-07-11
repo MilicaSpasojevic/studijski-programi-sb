@@ -13,9 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Modul;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Odrzavanje;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Predmet;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.Studijskiprogram;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.ModulDto;
+import rs.fon.silab.njt.web.studijskiprogrami.dto.OdrzavanjeBackDto;
+import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PredmetDto;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.StudijskiProgramDto;
 import rs.fon.silab.njt.web.studijskiprogrami.mapper.impl.ModulMapper;
@@ -26,9 +29,12 @@ import rs.fon.silab.njt.web.studijskiprogrami.repository.StudijskiProgramReposit
 import rs.fon.silab.njt.web.studijskiprogrami.service.FakultetService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.ModulService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.NivoStudijaService;
+import rs.fon.silab.njt.web.studijskiprogrami.service.OdrzavanjeService;
+import rs.fon.silab.njt.web.studijskiprogrami.service.PozicijaService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.PredmetService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.StudijskiProgramService;
 import rs.fon.silab.njt.web.studijskiprogrami.service.TipPredmetaService;
+import rs.fon.silab.njt.web.studijskiprogrami.validator.Validator;
 
 /**
  *
@@ -42,12 +48,14 @@ public class ModulServiceImpl implements ModulService {
     private final ModulMapper modulMapper;
 
     private final StudijskiProgramService spService;
+    private final OdrzavanjeService odrzavanjeService;
 
     @Autowired
-    public ModulServiceImpl(ModulRepository modulRepository, ModulMapper modulMapper, StudijskiProgramService spService) {
+    public ModulServiceImpl(ModulRepository modulRepository, ModulMapper modulMapper, StudijskiProgramService spService, OdrzavanjeService odrzavanjeService) {
         this.modulRepository = modulRepository;
         this.modulMapper = modulMapper;
         this.spService = spService;
+        this.odrzavanjeService = odrzavanjeService;
     }
 
     @Override
@@ -102,6 +110,21 @@ public class ModulServiceImpl implements ModulService {
             moduliDtos.add(modulMapper.toDto(m));
         }
         return moduliDtos;
+    }
+
+    @Override
+    public void publish(Long id) throws Exception {
+        Modul modul = modulRepository.getById(id);
+
+        for (int i = 1; i <= modul.getStudijskiProgramId().getBrojSemestara() / 2; i++) {
+            List<OdrzavanjeBackDto> odrzavanja = odrzavanjeService.getAll(id, Long.parseLong("" + i));
+            for (OdrzavanjeBackDto odrzavanjeBackDto : odrzavanja) {
+                if (odrzavanjeBackDto.getPredmeti().isEmpty()) {
+                    throw new Exception("Postoji pozicija za koju nije uneseno odrzavanje. Greska");
+                }
+            }
+        }
+        modulRepository.publish(id);
     }
 
 }

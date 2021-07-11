@@ -107,7 +107,7 @@ public class ModulController {
 
     @GetMapping("/status")
     public ResponseEntity<List<ModulDto>> getByStatus(@RequestParam(required = true, name = "status") int status) {
-        List<ModulDto> moduli=  new ArrayList<>();
+        List<ModulDto> moduli = new ArrayList<>();
         try {
             moduli = modulService.findByStatus(status);
             for (ModulDto m : moduli) {
@@ -119,6 +119,18 @@ public class ModulController {
         }
 
         return new ResponseEntity<>(moduli, HttpStatus.OK);
+    }
+
+    @PutMapping("/objavi")
+    public ResponseEntity<String> publish(@RequestParam(required = true, name = "id") Long id) {
+        try {
+            modulService.publish(id);
+            return new ResponseEntity<>("Uspesno sacuvan", HttpStatus.OK);
+
+        } catch (Exception ex) {
+//            Logger.getLogger(StudijskiProgramController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Neuspesno sacuvan", HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

@@ -7,6 +7,7 @@ package rs.fon.silab.njt.web.studijskiprogrami.service;
 
 import java.util.List;
 import rs.fon.silab.njt.web.studijskiprogrami.domain.PozicijaPK;
+import rs.fon.silab.njt.web.studijskiprogrami.domain.Studijskiprogram;
 import rs.fon.silab.njt.web.studijskiprogrami.dto.PozicijaDto;
 
 /**
@@ -17,4 +18,5 @@ public interface PozicijaService {
     void save(List<PozicijaDto> pozicijaDto) throws Exception;
     List<PozicijaDto> getAll() throws Exception;
     PozicijaDto getById(PozicijaPK id) throws Exception;
+    List<PozicijaDto> getByStudijskiProgram(Long spid) throws Exception;
 }
