@@ -19,4 +19,6 @@ public interface PozicijaService {
     List<PozicijaDto> getAll() throws Exception;
     PozicijaDto getById(PozicijaPK id) throws Exception;
     List<PozicijaDto> getByStudijskiProgram(Long spid) throws Exception;
+
+    public List<PozicijaDto> getByStudijskiProgramAndGodina(Long spid, Long godina) throws Exception;
 }

@@ -93,4 +93,24 @@ public class PozicijaController {
 
         return new ResponseEntity<>(pozicije, HttpStatus.OK);
     }
+    
+    @GetMapping("/spgod")
+    //@Produces(MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PozicijaDto>> getByStudijskiProgramAndGodina(@RequestParam(required = true, name="id") Long spid, @RequestParam(required = true,name="godina") Long godina) {
+        List<PozicijaDto> pozicije = new ArrayList<>();
+        try {
+            pozicije = pozicijaService.getByStudijskiProgramAndGodina(spid,godina);
+            for (PozicijaDto pozicija : pozicije) {
+                System.out.println(pozicija);
+            }
+
+        } catch (Exception ex) {
+//            ex.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(pozicije, HttpStatus.OK);
+    }
+
+    
 }

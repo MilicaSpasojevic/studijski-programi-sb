@@ -96,4 +96,14 @@ public class PozicijaServiceImpl implements PozicijaService {
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public List<PozicijaDto> getByStudijskiProgramAndGodina(Long spid, Long godina) throws Exception {
+        Studijskiprogram studijskiprogram = spMapper.toEntity(spService.findById(spid));
+        List<Pozicija> pozicije = pozicijaRepository.findByStudijskiprogramAndGodina(studijskiprogram, godina);
+        System.out.println(pozicije);
+        return pozicije.stream().map(pozicija -> {
+            return pozicijaMapper.toDto(pozicija);
+        }).collect(Collectors.toList());
+    }
+
 }
